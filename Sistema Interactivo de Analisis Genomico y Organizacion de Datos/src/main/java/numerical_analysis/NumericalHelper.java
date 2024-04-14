@@ -1,52 +1,35 @@
 package numerical_analysis;
 
+import java.util.ArrayList;
+
 public class NumericalHelper {
 
     /**
-     * Método recursivo para calcular la potencia de un número mediante multiplicaciones sucesivas.
+     * Método para calcular la suma de los primeros n números naturales de forma recursiva.
      *
-     * @param base     La base de la potencia.
-     * @param exponent El exponente de la potencia.
-     * @return El resultado de la potencia.
+     * @param n El número hasta el cual se desea calcular la suma.
+     * @return La suma de los primeros n números naturales.
      */
-    public static int calculatePower(int base, int exponent) {
-        if (exponent == 0) {
-            return 1;
+    public static int calculateSum(int n) {
+        if (n <= 0) {
+            return 0;
         } else {
-            return base * calculatePower(base, exponent - 1);
+            return n + calculateSum(n - 1);
         }
     }
 
     /**
-     * Método recursivo para encontrar el valor máximo en un conjunto de datos numéricos.
+     * Método para listar números en un rango dado.
      *
-     * @param array El arreglo de datos numéricos.
-     * @param start El índice de inicio para buscar en el arreglo.
-     * @param end   El índice de fin para buscar en el arreglo.
-     * @return El valor máximo en el conjunto de datos.
+     * @param start El número inicial del rango.
+     * @param end   El número final del rango.
+     * @return Un ArrayList de números en el rango [start, end].
      */
-    public static int findMax(int[] array, int start, int end) {
-        if (start == end) {
-            return array[start];
-        } else {
-            int mid = (start + end) / 2;
-            int leftMax = findMax(array, start, mid);
-            int rightMax = findMax(array, mid + 1, end);
-            return Math.max(leftMax, rightMax);
+    public static ArrayList<Integer> listNumbersInRange(int start, int end) {
+        ArrayList<Integer> numbers = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            numbers.add(i);
         }
-    }
-
-    // Ejemplo de uso
-    public static void main(String[] args) {
-        // Ejemplo de cálculo de potencia
-        int base = 2;
-        int exponent = 3;
-        int result = calculatePower(base, exponent);
-        System.out.println(base + " elevado a la " + exponent + " es: " + result);
-
-        // Ejemplo de encontrar el valor máximo en un arreglo
-        int[] numbers = {5, 2, 9, 1, 7};
-        int max = findMax(numbers, 0, numbers.length - 1);
-        System.out.println("El valor máximo en el arreglo es: " + max);
+        return numbers;
     }
 }
