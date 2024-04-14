@@ -49,13 +49,13 @@ public class FileManager {
 
     // Ejemplo de uso
     public static void main(String[] args) {
-        String inputFile = "data.txt"; // Ubicación relativa del archivo
+        String inputFile = "data.txt"; // Se espera que el archivo esté en el directorio del proyecto
         String outputFile = "output.txt";
 
         try {
             // Verificar si el archivo de entrada existe
             if (!fileExists(inputFile)) {
-                throw new IOException("El archivo de entrada no existe.");
+                throw new IOException("El archivo de entrada no existe en la ubicación esperada.");
             }
 
             // Leer el archivo de entrada y ordenar sus líneas
