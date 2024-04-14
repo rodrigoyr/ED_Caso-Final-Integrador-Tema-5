@@ -23,19 +23,27 @@ public class FileManager {
         }
     }
 
-    // Ejemplo de uso
-    public static void main(String[] args) {
+    /**
+     * Método para ordenar alfabéticamente las líneas de un archivo de texto.
+     *
+     * @param filePath Ruta del archivo de texto a ordenar.
+     * @param outputPath Ruta del archivo de texto ordenado.
+     * @throws IOException Si ocurre un error de lectura o escritura.
+     */
+    public static void sortLines(String filePath, String outputPath) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
-        lines.add("banana");
-        lines.add("apple");
-        lines.add("grape");
-
-        String outputFilePath = "sorted_output.txt";
-        try {
-            sortAndWriteLines(lines, outputFilePath);
-            System.out.println("Archivo ordenado exitosamente.");
-        } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+        Collections.sort(lines);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
+            for (String sortedLine : lines) {
+                writer.write(sortedLine);
+                writer.newLine();
+            }
         }
     }
 }
