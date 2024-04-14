@@ -49,10 +49,15 @@ public class FileManager {
 
     // Ejemplo de uso
     public static void main(String[] args) {
-        String inputFile = "input.txt";
+        String inputFile = "data.txt"; // Ubicación relativa del archivo
         String outputFile = "output.txt";
 
         try {
+            // Verificar si el archivo de entrada existe
+            if (!fileExists(inputFile)) {
+                throw new IOException("El archivo de entrada no existe.");
+            }
+
             // Leer el archivo de entrada y ordenar sus líneas
             ArrayList<String> sortedLines = readAndSortLines(inputFile);
 
@@ -64,5 +69,14 @@ public class FileManager {
             System.err.println("Error al manipular archivos: " + e.getMessage());
         }
     }
-}
 
+    /**
+     * Método para verificar si un archivo existe.
+     *
+     * @param filename Nombre del archivo.
+     * @return true si el archivo existe, false de lo contrario.
+     */
+    public static boolean fileExists(String filename) {
+        return new java.io.File(filename).exists();
+    }
+}
