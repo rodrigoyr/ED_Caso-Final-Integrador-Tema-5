@@ -1,45 +1,33 @@
 package scientific_information_management;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class FileManager {
 
     /**
-     * Método para leer un archivo de texto y ordenar alfabéticamente sus líneas.
+     * Método para ordenar alfabéticamente las líneas de un archivo de texto.
      *
-     * @param filename Nombre del archivo a leer.
-     * @return Lista de líneas del archivo ordenadas alfabéticamente.
-     * @throws IOException Si ocurre un error de entrada/salida.
+     * @param inputFile  Ruta del archivo de entrada.
+     * @param outputFile Ruta del archivo de salida para las líneas ordenadas.
+     * @throws IOException Si ocurre un error de lectura o escritura de archivos.
      */
-    public static ArrayList<String> readAndSortLines(String filename) throws IOException {
+    public static void sortLines(String inputFile, String outputFile) throws IOException {
+        // Leer líneas del archivo de entrada
         ArrayList<String> lines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
         }
 
+        // Ordenar las líneas alfabéticamente
         Collections.sort(lines);
-        return lines;
-    }
 
-    /**
-     * Método para escribir líneas en un archivo de texto.
-     *
-     * @param filename Nombre del archivo a escribir.
-     * @param lines    Lista de líneas a escribir en el archivo.
-     * @throws IOException Si ocurre un error de entrada/salida.
-     */
-    public static void writeLinesToFile(String filename, ArrayList<String> lines) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+        // Escribir las líneas ordenadas en el archivo de salida
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             for (String line : lines) {
                 writer.write(line);
                 writer.newLine();
@@ -49,34 +37,13 @@ public class FileManager {
 
     // Ejemplo de uso
     public static void main(String[] args) {
-        String inputFile = "data.txt"; // Se espera que el archivo esté en el directorio del proyecto
+        String inputFile = "input.txt";
         String outputFile = "output.txt";
-
         try {
-            // Verificar si el archivo de entrada existe
-            if (!fileExists(inputFile)) {
-                throw new IOException("El archivo de entrada no existe en la ubicación esperada.");
-            }
-
-            // Leer el archivo de entrada y ordenar sus líneas
-            ArrayList<String> sortedLines = readAndSortLines(inputFile);
-
-            // Escribir las líneas ordenadas en el archivo de salida
-            writeLinesToFile(outputFile, sortedLines);
-
-            System.out.println("Archivo de salida creado con éxito.");
+            sortLines(inputFile, outputFile);
+            System.out.println("Las líneas del archivo " + inputFile + " han sido ordenadas y escritas en " + outputFile);
         } catch (IOException e) {
-            System.err.println("Error al manipular archivos: " + e.getMessage());
+            System.err.println("Error al ordenar las líneas del archivo: " + e.getMessage());
         }
-    }
-
-    /**
-     * Método para verificar si un archivo existe.
-     *
-     * @param filename Nombre del archivo.
-     * @return true si el archivo existe, false de lo contrario.
-     */
-    public static boolean fileExists(String filename) {
-        return new java.io.File(filename).exists();
     }
 }
